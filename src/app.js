@@ -9,6 +9,7 @@ const { error } = require("console");
 
 app.use(express.json());
 
+//signup
 //ham postman se user details bhej rhe hain jo database me 
 //save ho rha hai user collection me dynamic info bhej rhe...
 app.post("/signup", async(req,res) => {
