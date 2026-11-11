@@ -5,11 +5,12 @@ const express = require("express");
 const connectDB = require("./config/database");
 const app = express();
 const User = require("./models/user");
+const { error } = require("console");
 
 app.use(express.json());
 
 //ham postman se user details bhej rhe hain jo database me 
-//save ho rha hai user collection me
+//save ho rha hai user collection me dynamic info bhej rhe...
 app.post("/signup", async(req,res) => {
 
 //Creating a new instance of a user model...    
@@ -55,10 +56,10 @@ app.get("/feed", async(req,res) => {
     }
 catch(err){
     res.status(401).send("something went wrong");
-}
+} 
 });
 
-//Delete user by id
+//Delete user by id -> findByIdandDelete
 app.delete("/user", async(req,res) => {
     const userid = req.body.id;
     try{
@@ -72,17 +73,32 @@ app.delete("/user", async(req,res) => {
 });
 
 // update a user
-app.patch("/user", async(req,res) => {
-     const userid = req.body.id;
+app.patch("/user/:userid", async(req,res) => {
+     const userid = req.params?.userid;
      const data = req.body;
 try{
-    const user = await User.findByIdAndUpdate({_id:userid},data,
-        {returndocument : "after",});
-    console.log(user);
+    const ALLOWED_UPDATES =  [
+        "photourl",
+        "about",
+        "age",
+        "gender",
+        "skills",
+    ];
+    const isUpdateAllowed = Object.keys(data).every((k) =>
+              ALLOWED_UPDATES.includes(k));
+    if(!isUpdateAllowed){
+        throw new Error("Update not allowed");
+    }
+
+    const user = await User.findByIdAndUpdate(userid,data,
+       {returnDocument : "after", 
+        runValidators:true,
+    });  
+        console.log(user);    //findOneAndUpdate - any feild 
     res.send("user updated successfully"); 
     }
 catch(err){
-    res.status(400).send("wrong");
+    res.status(400).send("wrong" + err.message);
 }
 });
 

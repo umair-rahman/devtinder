@@ -38,7 +38,6 @@
 // ///////MIDDLE WARES////////
 
 
-
 // app.get("/admin/getalldata", (req,res) =>{
 //     //logic of checking if the code is authorized
 
@@ -67,9 +66,9 @@
 //     }
 // });
 
+
+
 // iski jagah hmlog ye karenge instead.......
-
-
 // //instead wee will do this
 
 // //this will handle all request coming to admin
@@ -99,13 +98,7 @@
 
 
 
-
-
-
-
 // // error Handling 
-
-
 
 
 // app.get("/getusersdata", (req,res) => {

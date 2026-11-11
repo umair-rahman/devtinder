@@ -9,6 +9,8 @@
 // const app = express();
 // const User = require("./models/user");
 
+
+//adding user to the database
 // app.post("/signup", async(req,res) => {
 //     const user = new User({
 //         firstName : "Sumaira",
